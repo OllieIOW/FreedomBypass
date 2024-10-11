@@ -7,7 +7,6 @@ body {
     color: white;
     background-color: #202020;
     font-family: sans-serif;
-    background-color: black;
 }
 
 input[type="text"] {
@@ -18,6 +17,7 @@ input[type="text"] {
     color: black;
     border: none;
     padding-left: 10px;
+    margin-bottom: 20px;
 }
 
 input[type="text"]::placeholder {
@@ -30,23 +30,21 @@ input[type="text"]:focus {
 
 button {
     background: rgb(119,221,119);
-    height: 50px;
-    width: 400px;
-    font-size: 20px;
     margin: 10px;
 }
+
 </style>
 </head>
 <body>
 <br>
 <center>
     <h1>Blank tab proxy cloaker</h1>
-    <!-- New Refresh Button Added -->
-    <input type="text" id="urlInput" placeholder="Enter URL" required>
+    <input type="text" id="urlInput" placeholder="Proxy url" required>
+    <br>
+    <input type="text" id="titleInput" placeholder="Tab name [Optional]">
     <br><br>
-    <button id="refreshButton">Refresh Tab</button>
-    <br><br>
-    <button id="bypassButton" style="height:200px;width:400px;font-size:40px;">Bypass</button>
+    <button id="bypassButton" style="height:200px;width:400px;font-size:40px;">Open</button>
+
 </center>
 <script>
     var win;
@@ -55,6 +53,10 @@ button {
         var urlInput = document.getElementById('urlInput');
         var url = urlInput.value;
 
+        var titleInput = document.getElementById('titleInput');
+        var title = titleInput.value;
+
+        // Add https:// if the URL doesn't start with it
         if (!url.startsWith("https://")) {
             url = "https://" + url;
         }
@@ -63,9 +65,17 @@ button {
             if (win) {
                 win.focus();
             } else {
+                // Open a new blank window
                 win = window.open();
                 win.document.body.style.margin = '0';
                 win.document.body.style.height = '100vh';
+                
+                // Set the tab title if provided
+                if (title) {
+                    win.document.title = title;
+                }
+
+                // Create an iframe to display the URL content
                 var iframe = win.document.createElement('iframe');
                 iframe.style.border = 'none';
                 iframe.style.width = '100%';
@@ -74,14 +84,8 @@ button {
                 iframe.src = url;
                 win.document.body.appendChild(iframe);
             }
-            document.getElementById('bypassButton').style.background = '#FF6D6A';
-            document.getElementById('bypassButton').innerHTML = "Page Opened!";
+            location.reload();
         }
-    };
-
-    // Refresh button functionality
-    document.getElementById('refreshButton').onclick = function() {
-        location.reload();
     };
 </script>
 </body>
