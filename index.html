@@ -27,21 +27,31 @@ input[type="text"]::placeholder {
 input[type="text"]:focus {
     outline: none;
 }
+
+button {
+    background: rgb(119,221,119);
+    height: 50px;
+    width: 200px;
+    font-size: 20px;
+    margin: 10px;
+}
 </style>
 </head>
 <body>
 <br>
 <center>
-    <h1>about:blank proxy cloaker</h1>
+    <h1>Blank tab proxy cloaker</h1>
+    <!-- New Refresh Button Added -->
+    <button id="refreshButton">Refresh Tab</button>
     <br><br>
     <input type="text" id="urlInput" placeholder="Enter URL" required>
     <br><br>
-    <button style="background: rgb(119,221,119);height:200px;width:400px;font-size:40px;">Bypass</button>
+    <button id="bypassButton" style="height:200px;width:400px;font-size:40px;">Bypass</button>
 </center>
 <script>
     var win;
 
-    document.querySelector('button').onclick = function() {
+    document.getElementById('bypassButton').onclick = function() {
         var urlInput = document.getElementById('urlInput');
         var url = urlInput.value;
 
@@ -64,9 +74,14 @@ input[type="text"]:focus {
                 iframe.src = url;
                 win.document.body.appendChild(iframe);
             }
-            document.querySelector('button').style.background = '#FF6D6A';
-            document.querySelector('button').innerHTML = "Page Opened!";
+            document.getElementById('bypassButton').style.background = '#FF6D6A';
+            document.getElementById('bypassButton').innerHTML = "Page Opened!";
         }
+    };
+
+    // Refresh button functionality
+    document.getElementById('refreshButton').onclick = function() {
+        location.reload();
     };
 </script>
 </body>
